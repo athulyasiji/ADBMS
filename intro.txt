@@ -1,0 +1,25 @@
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use mytestDB
+switched to db mytestDB
+> db
+mytestDB
+> db.dropDatabase()
+{ "ok" : 1 }
+> use demo
+switched to db demo
+> use test
+switched to db test
+> db.student.insert({'Rno':'1','Name':'Piyush','Class':'TE COMP'});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rno':'2','Name':'Abhi','Class':'TE COMP'});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rno':'1','Name':'Piyush','Age':'22'});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rno':'1','Name':'Piyush','Age':'22','Totalmark':'86'});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'Rno':'1','Name':'Piyush','Age':'22','Class':'TE COMP','Totalmark':'86'});
+WriteResult({ "nInserted" : 1 })
+> db.Student.find();

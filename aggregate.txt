@@ -1,0 +1,54 @@
+> use comp;
+switched to db comp
+> db.createCollection('website');
+{ "ok" : 1 }
+> db.website.insert({'roll':'1','name':'harsh','amount':1000,'url':'www.yahoo.com'});
+WriteResult({ "nInserted" : 1 })
+> db.website.insert({'roll':'2','name':'jitesh','amount':2000,'url':'www.yahoo.com'});
+WriteResult({ "nInserted" : 1 })
+> db.website.insert({'roll':'3','name':'rina','amount':3000,'url':'www.google.com'});
+WriteResult({ "nInserted" : 1 })
+> db.website.insert({'roll':'4','name':'ash','amount':4000,'url':'www.gmail.com'});
+WriteResult({ "nInserted" : 1 })
+> db.website.insert({'roll':'5','name':'ash','amount':1000,'url':'www.pvg.com'});
+WriteResult({ "nInserted" : 1 })
+> db.website.aggregate({$group:{_id:"$name","total":{$sum:"$amount"}}});
+{ "_id" : "harsh", "total" : 1000 }
+{ "_id" : "ash", "total" : 5000 }
+{ "_id" : "rina", "total" : 3000 }
+{ "_id" : "jitesh", "total" : 2000 }
+> db.website.aggregate({$group:{_id:"$name","total":{$avg:"$amount"}}});
+{ "_id" : "jitesh", "total" : 2000 }
+{ "_id" : "harsh", "total" : 1000 }
+{ "_id" : "rina", "total" : 3000 }
+{ "_id" : "ash", "total" : 2500 }
+> db.website.aggregate({$group:{_id:"$name","total":{$min:"$amount"}}});
+{ "_id" : "rina", "total" : 3000 }
+{ "_id" : "harsh", "total" : 1000 }
+{ "_id" : "jitesh", "total" : 2000 }
+{ "_id" : "ash", "total" : 1000 }
+> db.website.aggregate({$group:{_id:"$name","total":{$max:"$amount"}}});
+{ "_id" : "jitesh", "total" : 2000 }
+{ "_id" : "harsh", "total" : 1000 }
+{ "_id" : "rina", "total" : 3000 }
+{ "_id" : "ash", "total" : 4000 }
+> db.website.aggregate({$group:{_id:"$name","total":{$first:"$amount"}}});
+{ "_id" : "ash", "total" : 4000 }
+{ "_id" : "jitesh", "total" : 2000 }
+{ "_id" : "harsh", "total" : 1000 }
+{ "_id" : "rina", "total" : 3000 }
+> db.website.aggregate({$group:{_id:"$name","total":{$last:"$amount"}}});
+{ "_id" : "harsh", "total" : 1000 }
+{ "_id" : "jitesh", "total" : 2000 }
+{ "_id" : "ash", "total" : 1000 }
+{ "_id" : "rina", "total" : 3000 }
+> db.website.aggregate({$group:{_id:"$name","total":{$push:"$amount"}}});
+{ "_id" : "harsh", "total" : [ 1000 ] }
+{ "_id" : "jitesh", "total" : [ 2000 ] }
+{ "_id" : "ash", "total" : [ 4000, 1000 ] }
+{ "_id" : "rina", "total" : [ 3000 ] }
+> db.website.aggregate({$group:{_id:"$name","total": {$sum:1}}});
+{ "_id" : "harsh", "total" : 1 }
+{ "_id" : "ash", "total" : 2 }
+{ "_id" : "rina", "total" : 1 }
+{ "_id" : "jitesh", "total" : 1 }

@@ -1,0 +1,59 @@
+> use employee
+switched to db employee
+
+> db.createCollection('employe');
+{ "ok" : 1 }
+> var bulk = db.employe.initializeUnorderedBulkOp();
+> bulk.insert({ empname : 'athulya', empdep:'it', status: 'Active'});
+> bulk.insert({ empname : 'athira', empdep:'police', status: 'Inactive'});
+> bulk.insert({ empname : 'arya', empdep:'bussiness', status: 'Active'});
+> bulk.insert({ empname : 'reshma', empdep:'teacher', status: 'Inactive'});
+> bulk.execute();
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 4,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.employe.find();
+{ "_id" : ObjectId("6274aa92c7378eb56cc57d70"), "empname" : "athulya", "empdep" : "it", "status" : "Active" }
+{ "_id" : ObjectId("6274aa92c7378eb56cc57d71"), "empname" : "athira", "empdep" : "police", "status" : "Inactive" }
+{ "_id" : ObjectId("6274aa92c7378eb56cc57d72"), "empname" : "arya", "empdep" : "bussiness", "status" : "Active" }
+{ "_id" : ObjectId("6274aa92c7378eb56cc57d73"), "empname" : "reshma", "empdep" : "teacher", "status" : "Inactive" }
+
+> db.employe.find().pretty();
+{
+        "_id" : ObjectId("6274aa92c7378eb56cc57d70"),
+        "empname" : "athulya",
+        "empdep" : "it",
+        "status" : "Active"
+}
+{
+        "_id" : ObjectId("6274aa92c7378eb56cc57d71"),
+        "empname" : "athira",
+        "empdep" : "police",
+        "status" : "Inactive"
+}
+{
+        "_id" : ObjectId("6274aa92c7378eb56cc57d72"),
+        "empname" : "arya",
+        "empdep" : "bussiness",
+        "status" : "Active"
+}
+{
+        "_id" : ObjectId("6274aa92c7378eb56cc57d73"),
+        "empname" : "reshma",
+        "empdep" : "teacher",
+        "status" : "Inactive"
+}
+
+
+
+
+
+

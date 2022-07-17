@@ -1,0 +1,16 @@
+1:
+create table student(rno number(10),name varchar(10),dob date,cid number(10)primary key,feepaid varchar(10),marks number(20));
+insert into studentd(rno,name,dob,cid,feepaid,marks)values(3,'Babu','16-Aug-1999',30,2500,67);
+
+create table course(cid number(10)references student,c_desc varchar(10),duration number(12),cf number(10));
+insert into course(cid,c_desc,duration,cf)values(60,'btech',4,25000);
+2:
+select rno,name,cid,feepaid,marks from student where dob='15-aug-1987';
+3:
+select rno,name,cid from student where marks<50 and feepaid=null;
+4:
+select count(rno) from student;
+5:
+select sum(feepaid) from student;
+
+

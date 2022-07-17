@@ -1,0 +1,187 @@
+*CREATE:
+
+> use test
+switched to db test
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use college
+switched to db college
+
+*CHECK DB CURRENTLY IN USE: 
+
+> db
+college
+
+*CREATE COLLECTION:
+
+> db.createCollection('Student');
+{ "ok" : 1 }
+
+*INSERTION
+
+> db.Student.insert({'Rno':'1','Name':'Piyush','Class':'TE COMP'});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({'Rno':'2','Name':'Abhi','Class':'TE COMP'});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({'Rno':'3','Name':'Athulya','Age':'22'});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({'Rno':'4','Name':'Athira','Age':'22','Mark':'86'});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({'Rno':'5','Name':'Arya','Age':'22','Class':'TE COMP','Totalmark':'86'});
+WriteResult({ "nInserted" : 1 })
+
+*SHOW RESULT:
+
+> db.Student.find();
+{ "_id" : ObjectId("62749945c7378eb56cc57d63"), "Rno" : "1", "Name" : "Piyush", "Class" : "TE COMP" }
+{ "_id" : ObjectId("62749a82c7378eb56cc57d68"), "Rno" : "2", "Name" : "Abhi", "Class" : "TE COMP" }
+{ "_id" : ObjectId("62749aa6c7378eb56cc57d69"), "Rno" : "3", "Name" : "Athulya", "Age" : "22" }
+{ "_id" : ObjectId("62749abcc7378eb56cc57d6a"), "Rno" : "4", "Name" : "Athira", "Age" : "22", "Mark" : "86" }
+{ "_id" : ObjectId("62749ad2c7378eb56cc57d6b"), "Rno" : "5", "Name" : "Arya", "Age" : "22", "Class" : "TE COMP", "Totalmark" : "86" }
+
+
+*INSERT BULK:
+
+> var bulk = db.Student.initializeUnorderedBulkOp();
+> bulk.insert({ code: "P1", Qty: 100, status: "Active"});
+> bulk.insert({ code: "P2", Qty: 200, status: "Active"});
+> bulk.insert({ code: "P3", Qty: 300, status: "Active"});
+> bulk.insert({ code: "P4", Qty: 400, status: "Inactive"});
+> bulk.execute();
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 4,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.Student.find();
+{ "_id" : ObjectId("62749945c7378eb56cc57d63"), "Rno" : "1", "Name" : "Piyush", "Class" : "TE COMP" }
+{ "_id" : ObjectId("62749aa6c7378eb56cc57d69"), "Rno" : "3", "Name" : "Athulya", "Age" : "22" }
+{ "_id" : ObjectId("62749abcc7378eb56cc57d6a"), "Rno" : "4", "Name" : "Ammu", "Age" : "22", "Mark" : "86" }
+{ "_id" : ObjectId("62749ad2c7378eb56cc57d6b"), "Rno" : "5", "Name" : "Arya", "Age" : "22", "Class" : "TE COMP", "Totalmark" : "86" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6c"), "code" : "P1", "Qty" : 100, "status" : "Active" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6d"), "code" : "P2", "Qty" : 200, "status" : "Active" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6e"), "code" : "P3", "Qty" : 300, "status" : "Active" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6f"), "code" : "P4", "Qty" : 400, "status" : "Inactive" }
+
+
+*RETRIVE ONLY ONE DOCUMRNT:
+
+> db.Student.findOne();
+{
+        "_id" : ObjectId("62749945c7378eb56cc57d63"),
+        "Rno" : "1",
+        "Name" : "Piyush",
+        "Class" : "TE COMP"
+}
+
+
+*UPDATION:
+
+> db.Student.update({'Name':'Athira'},{$set:{'Name':'Ammu'}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Student.find().pretty();
+{
+        "_id" : ObjectId("62749945c7378eb56cc57d63"),
+        "Rno" : "1",
+        "Name" : "Piyush",
+        "Class" : "TE COMP"
+}
+{
+        "_id" : ObjectId("62749a82c7378eb56cc57d68"),
+        "Rno" : "2",
+        "Name" : "Abhi",
+        "Class" : "TE COMP"
+}
+{
+        "_id" : ObjectId("62749aa6c7378eb56cc57d69"),
+        "Rno" : "3",
+        "Name" : "Athulya",
+        "Age" : "22"
+}
+{
+        "_id" : ObjectId("62749abcc7378eb56cc57d6a"),
+        "Rno" : "4",
+        "Name" : "Ammu",
+        "Age" : "22",
+        "Mark" : "86"
+}
+{
+        "_id" : ObjectId("62749ad2c7378eb56cc57d6b"),
+        "Rno" : "5",
+        "Name" : "Arya",
+        "Age" : "22",
+        "Class" : "TE COMP",
+        "Totalmark" : "86"
+}
+
+*DELETION:
+
+>> db.Student.remove({'Name':'Abhi'});
+WriteResult({ "nRemoved" : 1 })
+
+> db.Student.find().pretty();
+{
+        "_id" : ObjectId("62749945c7378eb56cc57d63"),
+        "Rno" : "1",
+        "Name" : "Piyush",
+        "Class" : "TE COMP"
+}
+{
+        "_id" : ObjectId("62749aa6c7378eb56cc57d69"),
+        "Rno" : "3",
+        "Name" : "Athulya",
+        "Age" : "22"
+}
+{
+        "_id" : ObjectId("62749abcc7378eb56cc57d6a"),
+        "Rno" : "4",
+        "Name" : "Ammu",
+        "Age" : "22",
+        "Mark" : "86"
+}
+{
+        "_id" : ObjectId("62749ad2c7378eb56cc57d6b"),
+        "Rno" : "5",
+        "Name" : "Arya",
+        "Age" : "22",
+        "Class" : "TE COMP",
+        "Totalmark" : "86"
+}
+
+
+*DELETE MANY:
+
+> db.Student.deleteMany({'Age' : '22'})
+{ "acknowledged" : true, "deletedCount" : 3 }
+> db.Student.find();
+{ "_id" : ObjectId("62749945c7378eb56cc57d63"), "Rno" : "1", "Name" : "Piyush", "Class" : "TE COMP" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6c"), "code" : "P1", "Qty" : 100, "status" : "Active" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6d"), "code" : "P2", "Qty" : 200, "status" : "Active" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6e"), "code" : "P3", "Qty" : 300, "status" : "Active" }
+{ "_id" : ObjectId("6274a0acc7378eb56cc57d6f"), "code" : "P4", "Qty" : 400, "status" : "Inactive" }
+
+*RETRIVE ONLY ONE DOCUMRNT:
+
+> db.Student.findOne();
+{
+        "_id" : ObjectId("62749945c7378eb56cc57d63"),
+        "Rno" : "1",
+        "Name" : "Piyush",
+        "Class" : "TE COMP"
+}
+
+*TO GET DISTINCT RECORS FROM ONE FILED:
+
+> db.Student.distinct('status')
+[ "Active", "Inactive" ]
+
+
+
